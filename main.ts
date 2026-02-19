@@ -19,7 +19,7 @@ function startGame () {
     . . . . . . . . . . . . . . . .
 `, SpriteKind.Player)
     tiles.setCurrentTilemap(tilemap`level1`)
-    controller.moveSprite(player)
+    controller.moveSprite(cannonSprite)
 }
 
 startGame()
