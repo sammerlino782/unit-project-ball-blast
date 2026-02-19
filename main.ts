@@ -1,3 +1,9 @@
+namespace userconfig {
+    export const ARCADE_SCREEN_WIDTH = 9*16
+    export const ARCADE_SCREEN_HEIGHT = 12*16
+
+}
+
 let cannonSprite: Sprite;
 // Creating player, setting background and tilemap
 function startGame () {
@@ -20,7 +26,7 @@ function startGame () {
     . b c c c . . . . . . c c c c .
     . . . . . . . . . . . . . . . .
 `, SpriteKind.Player)
-    cannonSprite.setPosition(80, 100)
+    tiles.placeOnTile(cannonSprite, tiles.getTileLocation(5, 12))
     tiles.setCurrentTilemap(tilemap`level1`)
     controller.moveSprite(cannonSprite, 50, 0)
 }
