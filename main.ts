@@ -71,5 +71,7 @@ game.onUpdateInterval(1000, function () {
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
     `, cannonSprite, 0, -60)
+    projectile.y -= 22
     }
+    
 })
