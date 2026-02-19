@@ -27,7 +27,7 @@ function startGame () {
     . . . . . . . . . . . . . . . .
 `, SpriteKind.Player)
     //tiles.placeOnTile(cannonSprite, tiles.getTileLocation(5, 12))
-    cannonSprite.x = 5 * 16; cannonSprite.y = 8.5*16
+    cannonSprite.x = 80; cannonSprite.y = 180
     tiles.setCurrentTilemap(tilemap`level1`)
     controller.moveSprite(cannonSprite, 50, 0)
 }
