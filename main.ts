@@ -116,3 +116,8 @@ game.onUpdateInterval(3000, function () {
         ....................................
     `, SpriteKind.Enemy)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, otherSprite: Sprite) {
+    sprites.destroy(mySprite)
+    sprites.destroy(otherSprite)
+    info.changeScoreBy(1)
+})
