@@ -51,7 +51,7 @@ startGame()
 
 // Cannon shooting functionality, when space pressed down
 // the cannon shoots a projectile
-game.onUpdateInterval(1000, function () {
+game.onUpdateInterval(500, function () {
     if (controller.A.isPressed()) {
     let projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . .
@@ -70,7 +70,7 @@ game.onUpdateInterval(1000, function () {
         . . . . . . 2 2 2 2 . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
-    `, cannonSprite, 0, -60)
+    `, cannonSprite, 0, -90)
     projectile.y -= 22
     }
     
