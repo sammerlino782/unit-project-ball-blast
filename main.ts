@@ -1,6 +1,8 @@
+let cannonSprite: Sprite;
+// Creating player, setting background and tilemap
 function startGame () {
     scene.setBackgroundColor(9)
-    let cannonSprite = sprites.create(img`
+    cannonSprite = sprites.create(img`
     . . . . . . b b b b . . . . . .
     . . . . . b c c c c b . . . . .
     . . . . . b c c c c b . . . . .
@@ -18,33 +20,35 @@ function startGame () {
     . b c c c . . . . . . c c c c .
     . . . . . . . . . . . . . . . .
 `, SpriteKind.Player)
+    cannonSprite.setPosition(80, 100)
     tiles.setCurrentTilemap(tilemap`level1`)
-    controller.moveSprite(cannonSprite)
+    controller.moveSprite(cannonSprite, 50, 0)
 }
 
+// Initializing game
 startGame()
 
-game.onUpdateInterval(1500, function () {
+// Cannon shooting functionality, when space pressed down
+// the cannon shoots a projectile
+game.onUpdateInterval(1000, function () {
     if (controller.A.isPressed()) {
-    let enemy = sprites.create(img`
+    let projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
+        . . . . . . 2 2 2 2 . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
-        . . . . 2 2 2 2 2 2 2 2 2 2 . .
-        . . . . 2 2 2 2 2 2 2 2 2 2 . .
-        . . . . 2 2 2 2 2 2 2 2 2 2 . .
-        . . . . 2 2 2 2 2 2 2 2 2 2 . .
-        . . . . 2 2 2 2 2 2 2 2 2 2 . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-    `, SpriteKind.Enemy)
-    enemy.setVelocity(randint(-40, -50), 0)
-    enemy.setPosition(randint(130, 150), randint(10, screen.height - 10))
+    `, cannonSprite, 0, -60)
     }
 })
