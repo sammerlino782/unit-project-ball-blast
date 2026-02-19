@@ -1,6 +1,23 @@
 function startGame () {
     scene.setBackgroundColor(9)
-    let player = sprites.create(assets.image`playerimage`, SpriteKind.Player)
+    let cannonSprite = sprites.create(img`
+    . . . . . . b b b b . . . . . .
+    . . . . . b c c c c b . . . . .
+    . . . . . b c c c c b . . . . .
+    . . . . . b c c c c b . . . . .
+    . . . . . b c c c c b . . . . .
+    . . . . . b c c c c b . . . . .
+    . . . . . b c c c c b . . . . .
+    . . . . . b c c c c b . . . . .
+    . b c c b c c c c c c b c c b .
+    c c b c f f c c c c f f c b c c
+    c c e e c f e e e e f c e e c c
+    c c 4 e c f 4 e e 4 f c e 4 c c
+    c b e e b c d . . d c b e e b c
+    c c b b c c . . . . c c b b c c
+    . b c c c . . . . . . c c c c .
+    . . . . . . . . . . . . . . . .
+`, SpriteKind.Player)
     tiles.setCurrentTilemap(tilemap`level1`)
     controller.moveSprite(player)
 }
