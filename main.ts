@@ -132,7 +132,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
     ball.x = randint(20, 120)
     ball.y = randint(30, 35)
     ball.ay = 60
-    ball.vx = randint(50, 60)
+    ball.vx = randint(-50, 50)
 
 })
 game.onUpdateInterval(3000, function () {
