@@ -71,6 +71,8 @@ function startGame() {
 
 // Initializing game
 startGame()
+game.splash("Welcome to Ball Blast!")
+
 
 // Cannon shooting functionality, when space pressed down
 // the cannon shoots a projectile
@@ -98,7 +100,30 @@ game.onUpdateInterval(500, function () {
     }
 
 })
-
+controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
+    let ball = sprites.create(img`
+        . . . . . . . . . . . . . . . .
+        . . . . 1 1 1 1 1 1 1 . . . . .
+        . . 1 1 7 7 7 7 7 7 7 1 1 . . .
+        . 1 7 7 7 7 7 7 7 7 7 7 7 1 . .
+        . 1 7 7 7 7 7 7 7 7 7 7 7 1 . .
+        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
+        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
+        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
+        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
+        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
+        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
+        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
+        . 1 7 7 7 7 7 7 7 7 7 7 7 1 . .
+        . 1 7 7 7 7 7 7 7 7 7 7 7 1 . .
+        . . 1 1 7 7 7 7 7 7 7 1 1 . . .
+        . . . . 1 1 1 1 1 1 1 . . . . .
+    `, SpriteKind.Enemy)
+    ball.setBounceOnWall(true)
+    ball.x = randint(20, 120)
+    ball.y = randint(10, 15)
+    ball.ay = 30
+})
 game.onUpdateInterval(3000, function () {
     levelTracker.say("Level " + level)
     // let EnemySprite = sprites.create(img`
@@ -143,7 +168,6 @@ game.onUpdateInterval(3000, function () {
 
 
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, otherSprite: Sprite) {
-    sprites.destroy(sprite)
     sprites.destroy(otherSprite)
-    info.changeScoreBy(1)
+    game.gameOver(false)
 })
