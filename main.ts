@@ -8,6 +8,8 @@ namespace userconfig {
 // Code for making a new spritekind
 namespace SpriteKind {
     export const Scoreboard = SpriteKind.create()
+    export const Food1 = SpriteKind.create()
+    export const Food2 = SpriteKind.create()
 }
 info.setScore(0)
 info.setLife(1)
@@ -167,11 +169,11 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
         myCoin1.setPosition(enemy.x, enemy.y)
         myCoin1.setVelocity(0, 50)
     } else if (ranNum > 6 && ranNum <= 7) {
-        let myCoin2 = sprites.create(assets.image`Coin2`, SpriteKind.Player)
+        let myCoin2 = sprites.create(assets.image`Coin2`, SpriteKind.Food1)
         myCoin2.setPosition(enemy.x, enemy.y)
         myCoin2.setVelocity(0, 50)
     } else if (ranNum >= 8) {
-        let myCoin5 = sprites.create(assets.image`Coin5`, SpriteKind.Player)
+        let myCoin5 = sprites.create(assets.image`Coin5`, SpriteKind.Food2)
         myCoin5.setPosition(enemy.x, enemy.y)
         myCoin5.setVelocity(0, 50)
     }
@@ -180,4 +182,15 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
         sprites.destroy(enemy, effects.disintegrate, 50)
     }
 })
-
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function(sprite: Sprite, otherSprite: Sprite) {
+    info.changeScoreBy(1)
+    sprites.destroy(otherSprite)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food1, function (sprite: Sprite, otherSprite: Sprite) {
+    info.changeScoreBy(2)
+    sprites.destroy(otherSprite)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food2, function (sprite: Sprite, otherSprite: Sprite) {
+    info.changeScoreBy(5)
+    sprites.destroy(otherSprite)
+})
