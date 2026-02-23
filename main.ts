@@ -8,6 +8,7 @@ info.setLife(1)
 let level = 1;
 let cannonSprite: Sprite;
 let levelTracker: Sprite;
+let bulletStrength = 25;
 
 // Creating player, setting background and tilemap
 function startGame() {
@@ -76,7 +77,7 @@ game.splash("Welcome to Ball Blast!")
 
 // Cannon shooting functionality, when space pressed down
 // the cannon shoots a projectile
-game.onUpdateInterval(500, function () {
+game.onUpdateInterval(200, function () {
     if (controller.A.isPressed()) {
         let projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . .
@@ -122,7 +123,9 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
     ball.setBounceOnWall(true)
     ball.x = randint(20, 120)
     ball.y = randint(10, 15)
-    ball.ay = 30
+    ball.ay = 40
+    ball.vx = randint(40, 60)
+
 })
 game.onUpdateInterval(3000, function () {
     levelTracker.say("Level " + level)
