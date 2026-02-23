@@ -135,6 +135,13 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
     ball.vx = randint(-50, 50)
 
 })
+// making sprite bounce less high each bounce
+scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Location) {
+    if (sprite.ay <= 300 && sprite.y == 168) {
+        sprite.ay += 5
+    }
+})
+
 game.onUpdateInterval(3000, function () {
     levelTracker.say("Level " + level)
     // let EnemySprite = sprites.create(img`
