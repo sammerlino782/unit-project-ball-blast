@@ -3,6 +3,12 @@ namespace userconfig {
     export const ARCADE_SCREEN_HEIGHT = 12 * 16
 
 }
+
+// Code for making a new spritekind if needed
+namespace SpriteKind {
+    export const Scoreboard = SpriteKind.create()
+}
+
 info.setScore(0)
 info.setLife(1)
 let level = 1;
@@ -30,7 +36,7 @@ function startGame() {
         9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
         9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
         9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-    `, SpriteKind.Projectile)
+    `, SpriteKind.Scoreboard)
     levelTracker.setPosition(70, 20)
     cannonSprite = sprites.create(img`
         ............1ddddddddd............
@@ -120,11 +126,17 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
         . . 1 1 7 7 7 7 7 7 7 1 1 . . .
         . . . . 1 1 1 1 1 1 1 . . . . .
     `, SpriteKind.Enemy)
+    let healthbar = statusbars.create(20, 4, 0)
+    healthbar.value = 50
+    healthbar.attachToSprite(ball)
+    ball.data["bar"] = healthbar
+    healthbar.data["owner"] = ball
+    healthbar.setOffsetPadding(0, 3)
     ball.setBounceOnWall(true)
     ball.x = randint(20, 120)
-    ball.y = randint(10, 15)
-    ball.ay = 40
-    ball.vx = randint(40, 60)
+    ball.y = randint(30, 35)
+    ball.ay = 60
+    ball.vx = randint(50, 60)
 
 })
 game.onUpdateInterval(3000, function () {
@@ -173,4 +185,25 @@ game.onUpdateInterval(3000, function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, otherSprite: Sprite) {
     sprites.destroy(otherSprite)
     game.gameOver(false)
+})
+
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
+    let bar = otherSprite.data["bar"] as StatusBarSprite
+    bar.value -= 10
+    sprites.destroy(sprite)
+})
+statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
+    let enemy = status.data["owner"] as Sprite
+
+    if (enemy) {
+        enemy.vx = 0
+        enemy.vy = 0
+        enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
+
+        // Kill the enemy
+        sprites.destroy(enemy, effects.disintegrate, 200)
+
+        // Clear the data so it doesn't try to run twice
+        status.data["owner"] = null
+    }
 })
