@@ -144,45 +144,7 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Loca
 })
 
 game.onUpdateInterval(3000, function () {
-    levelTracker.say("Level " + level)
-    // let EnemySprite = sprites.create(img`
-    //     .............88888888888............
-    //     ..........88888888888888888.........
-    //     .........8888888888888888888........
-    //     .......88888888888888888888888......
-    //     ......8888888888888888888888888.....
-    //     .....888888888888888888888888888....
-    //     ....88888888888888888888888888888...
-    //     ....88888888888888888888888888888...
-    //     ...8888888888888888888888888888888..
-    //     ..888888888888888888888888888888888.
-    //     ..888888888888888888888888888888888.
-    //     ..888888888888888888888888888888888.
-    //     .88888888888888888888888888888888888
-    //     .88888888888888888888888888888888888
-    //     .88888888888888666666688888888888888
-    //     .88888888888886666666668888888888888
-    //     .88888888888886666666668888888888888
-    //     .88888888888886666666668888888888888
-    //     .88888888888886666666668888888888888
-    //     .88888888888886666666668888888888888
-    //     .88888888888886666666668888888888888
-    //     .88888888888886666666668888888888888
-    //     .88888888888888666666688888888888888
-    //     ..888888888888888888888888888888888.
-    //     ..888888888888888888888888888888888.
-    //     ..888888888888888888888888888888888.
-    //     ...8888888888888888888888888888888..
-    //     ....88888888888888888888888888888...
-    //     ....88888888888888888888888888888...
-    //     .....888888888888888888888888888....
-    //     ......8888888888888888888888888.....
-    //     .......88888888888888888888888......
-    //     .........8888888888888888888........
-    //     ..........88888888888888888.........
-    //     .............88888888888............
-    //     ....................................
-    // `, SpriteKind.Enemy)
+    levelTracker.say("Level " + level,5000)  
 })
 
 
@@ -197,9 +159,25 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
     sprites.destroy(sprite)
 })
 statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
+    let ranNum = randint(0, 8)
     let enemy = status.spriteAttachedTo()
+    if (ranNum <= 4) {
+    } else if (ranNum > 4 && ranNum <=5 ){
+        let myCoin1 = sprites.create(assets.image`Coin1`, SpriteKind.Food)
+        myCoin1.setPosition(enemy.x, enemy.y)
+        myCoin1.setVelocity(0, 50)
+    } else if (ranNum > 6 && ranNum <= 7) {
+        let myCoin2 = sprites.create(assets.image`Coin2`, SpriteKind.Player)
+        myCoin2.setPosition(enemy.x, enemy.y)
+        myCoin2.setVelocity(0, 50)
+    } else if (ranNum >= 8) {
+        let myCoin5 = sprites.create(assets.image`Coin5`, SpriteKind.Player)
+        myCoin5.setPosition(enemy.x, enemy.y)
+        myCoin5.setVelocity(0, 50)
+    }
     if (enemy) {
         enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
         sprites.destroy(enemy, effects.disintegrate, 50)
     }
 })
+

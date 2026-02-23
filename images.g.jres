@@ -9,6 +9,21 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "playerimage"
     },
+    "image3": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAVVVVVQAAAFVVVVVVVQAAVVVVVVVVAFBVVVVVVVUFUFUVVVUVVQVQVVFVVRVVBVAVEREREVUFUFVVVVUVVQVQVVVVVRVVBVBVVVVVVVUFAFVVVVVVVQAAVVVVVVVVAAAAVVVVVQAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Coin1"
+    },
+    "image4": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAZmZmZgAAAGaIiIiIZgAAhoiIiIhoAGCIiIiIiIgGYIgYiBiIiAZgiIGIEYiIBmCIgRgYiIgGYIiBgRiIiAZgiBiIGIiIBmCIiIiIiIgGAIaIiIiIaAAAZoiIiIhmAAAAZmZmZgAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Coin2"
+    },
+    "image5": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAzMzMzAAAAMyqqqqqzAAArKqqqqrKAMCqqqqqqqoMwKoREaqhqgzAqqEaqqGqDMCqoRqqoaoMwKqhGqqhqgzAqqGqEaqqDMCqqqqqqqoMAKyqqqqqygAAzKqqqqrMAAAAzMzMzAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Coin5"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
