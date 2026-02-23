@@ -4,11 +4,10 @@ namespace userconfig {
 
 }
 
-// Code for making a new spritekind if needed
+// Code for making a new spritekind
 namespace SpriteKind {
     export const Scoreboard = SpriteKind.create()
 }
-
 info.setScore(0)
 info.setLife(1)
 let level = 1;
@@ -126,11 +125,8 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
         . . 1 1 7 7 7 7 7 7 7 1 1 . . .
         . . . . 1 1 1 1 1 1 1 . . . . .
     `, SpriteKind.Enemy)
-    let healthbar = statusbars.create(20, 4, 0)
-    healthbar.value = 50
+    let healthbar = statusbars.create(20, 4, StatusBarKind.Health)
     healthbar.attachToSprite(ball)
-    ball.data["bar"] = healthbar
-    healthbar.data["owner"] = ball
     healthbar.setOffsetPadding(0, 3)
     ball.setBounceOnWall(true)
     ball.x = randint(20, 120)
@@ -188,22 +184,14 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, 
 })
 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
-    let bar = otherSprite.data["bar"] as StatusBarSprite
+    let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
     bar.value -= 10
     sprites.destroy(sprite)
 })
 statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
-    let enemy = status.data["owner"] as Sprite
-
+    let enemy = status.spriteAttachedTo()
     if (enemy) {
-        enemy.vx = 0
-        enemy.vy = 0
         enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
-
-        // Kill the enemy
         sprites.destroy(enemy, effects.disintegrate, 200)
-
-        // Clear the data so it doesn't try to run twice
-        status.data["owner"] = null
     }
 })
