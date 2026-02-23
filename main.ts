@@ -200,6 +200,6 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
     let enemy = status.spriteAttachedTo()
     if (enemy) {
         enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
-        sprites.destroy(enemy, effects.disintegrate, 200)
+        sprites.destroy(enemy, effects.disintegrate, 50)
     }
 })
