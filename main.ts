@@ -26,7 +26,7 @@ function shopStore(){
 let numberOfEnemys = 3
 info.setScore(0)
 info.setLife(1)
-let level: number = 1;
+let level: number = 0;
 let cannonSprite: Sprite;
 let levelTracker: Sprite;
 let bulletStrength = 15;
@@ -197,11 +197,11 @@ info.onLifeZero(function() {
         controller.moveSprite(cannonSprite, 0, 0)
         gameActive = false;
     }
-    enemies = sprites.allOfKind(SpriteKind.Enemy)
+    // enemies = sprites.allOfKind(SpriteKind.Enemy)
 
-    for (let i = 0; i < enemies.length; i++) {
-        enemies[i].destroy()
-    }
+    // for (let i = 0; i < enemies.length; i++) {
+        // enemies[i].destroy()
+    //}
 })
 
 
@@ -222,15 +222,15 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
     } else if (ranNum > 4 && ranNum <=5 ){
         let myCoin1 = sprites.create(assets.image`Coin1`, SpriteKind.Food)
         myCoin1.setPosition(enemy.x, enemy.y)
-        myCoin1.setVelocity(0, 50)
+        myCoin1.setVelocity(0, 80)
     } else if (ranNum > 6 && ranNum <= 7) {
         let myCoin2 = sprites.create(assets.image`Coin2`, SpriteKind.Food1)
         myCoin2.setPosition(enemy.x, enemy.y)
-        myCoin2.setVelocity(0, 50)
+        myCoin2.setVelocity(0, 80)
     } else if (ranNum >= 8) {
         let myCoin5 = sprites.create(assets.image`Coin5`, SpriteKind.Food2)
         myCoin5.setPosition(enemy.x, enemy.y)
-        myCoin5.setVelocity(0, 50)
+        myCoin5.setVelocity(0, 80)
     }
     if (enemy) {
         enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
