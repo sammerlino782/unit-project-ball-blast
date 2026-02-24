@@ -16,7 +16,7 @@ info.setLife(1)
 let level = 1;
 let cannonSprite: Sprite;
 let levelTracker: Sprite;
-let bulletStrength = 25;
+let bulletStrength = 15;
 
 // Creating player, setting background and tilemap
 function startGame() {
@@ -157,7 +157,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, 
 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
     let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
-    bar.value -= 10
+    bar.value -= bulletStrength
     sprites.destroy(sprite)
 })
 statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
