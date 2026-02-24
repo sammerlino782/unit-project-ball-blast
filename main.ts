@@ -13,10 +13,11 @@ namespace SpriteKind {
 }
 info.setScore(0)
 info.setLife(1)
-let level = 1;
+let level: number = 1;
 let cannonSprite: Sprite;
 let levelTracker: Sprite;
 let bulletStrength = 15;
+let gameActive = false;
 
 // Creating player, setting background and tilemap
 function startGame() {
@@ -72,7 +73,6 @@ function startGame() {
         ..dffffffffd..........dffffffffd..
         ...dbccccbd............dbccccbd...
     `, SpriteKind.Player)
-    //tiles.placeOnTile(cannonSprite, tiles.getTileLocation(5, 12))
     cannonSprite.x = 75; cannonSprite.y = 161
     tiles.setCurrentTilemap(tilemap`level1`)
     controller.moveSprite(cannonSprite, 90, 0)
@@ -86,7 +86,7 @@ game.splash("Welcome to Ball Blast!")
 // Cannon shooting functionality, when space pressed down
 // the cannon shoots a projectile
 game.onUpdateInterval(200, function () {
-    if (controller.A.isPressed()) {
+    if (controller.A.isPressed() && gameActive) {
         let projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
@@ -106,10 +106,15 @@ game.onUpdateInterval(200, function () {
         . . . . . . . . . . . . . . . .
     `, cannonSprite, 0, -90)
         projectile.y -= 22
+    } else if (controller.A.isPressed() && !gameActive) {
+        gameActive = true;
+        startLevel(level)
+        controller.moveSprite(cannonSprite, 90, 0)
     }
 
 })
-controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
+
+function createBall () {
     let ball = sprites.create(img`
         . . . . . . . . . . . . . . . .
         . . . . 1 1 1 1 1 1 1 . . . . .
@@ -136,7 +141,10 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
     ball.y = randint(30, 35)
     ball.ay = 60
     ball.vx = randint(-50, 50)
+}
 
+controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
+    createBall()
 })
 // making sprite bounce less high each bounce
 scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Location) {
@@ -146,13 +154,33 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Loca
 })
 
 game.onUpdateInterval(3000, function () {
-    levelTracker.say("Level " + level,5000)  
+    if (gameActive) {
+        levelTracker.say("Level " + level, 5000)
+    } else if (!gameActive) {
+        levelTracker.say("Press A to start!", 5000)
+    }
 })
 
+let enemiesPerLevel = [4, 5, 7, 8, 11, 13]
 
+function startLevel (level: number) {
+    let enemyCount = enemiesPerLevel[level];
+    for (let i = 0; i < enemyCount; i++) {
+        createBall()
+    }
+}
+
+let enemies;
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, otherSprite: Sprite) {
     sprites.destroy(otherSprite)
-    game.gameOver(false)
+    gameActive = false
+    music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
+    controller.moveSprite(cannonSprite, 0, 0)
+    enemies = sprites.allOfKind(SpriteKind.Enemy)
+
+    for (let i = 0; i < enemies.length; i++) {
+        enemies[i].destroy()
+    }
 })
 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
