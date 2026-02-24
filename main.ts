@@ -17,6 +17,9 @@ namespace SpriteKind {
 function levelUpdater(level: number){
     numberOfEnemys = 3
     numberOfEnemys = numberOfEnemys + level
+    level += 1
+    startLevel(level)
+
 }
 
 function shopStore(){
@@ -31,6 +34,14 @@ let cannonSprite: Sprite;
 let levelTracker: Sprite;
 let bulletStrength = 15;
 let gameActive = false;
+
+
+
+game.onUpdateInterval(500, function() {
+    if (numberOfEnemys <= 0) {
+        levelUpdater
+    }
+})
 
 // Creating player, setting background and tilemap
 function startGame() {
@@ -190,7 +201,6 @@ info.onLifeZero(function() {
         info.setLife(1)
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
         levelUpdater(level)
-        startLevel(level)
         
     } else {
         game.gameOver(false)
@@ -233,11 +243,11 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
         myCoin5.setPosition(enemy.x, enemy.y)
         myCoin5.setVelocity(0, 80)
     }
+    
     if (enemy) {
         enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
         sprites.destroy(enemy, effects.disintegrate, 50)
-        numberOfEnemys - 1
-        console.log(numberOfEnemys)
+        numberOfEnemys -= 1
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function(sprite: Sprite, otherSprite: Sprite) {
