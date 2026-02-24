@@ -100,24 +100,19 @@ game.splash("Welcome to Ball Blast!")
 // the cannon shoots a projectile
 game.onUpdateInterval(200, function () {
     if (controller.A.isPressed() && gameActive) {
-        let projectile = sprites.createProjectileFromSprite(img`
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . 2 2 2 2 . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-    `, cannonSprite, 0, -170)
+       let projectile = sprites.createProjectileFromSprite(img`
+    . . . . f f . . . .
+    . . . f 1 5 f . . .
+    . . . f 5 5 f . . .
+    . . . f 5 2 f . . .
+    . . . f 2 2 f . . .
+    . . . 5 5 5 5 . 4 .
+    . . 4 5 5 . 5 . . 4
+    4 . . 5 5 . . 5 . .
+    . . 5 . 4 . 5 . . .
+    . . . . . . . . 4 .
+    . . . . 4 . . . . .
+`, cannonSprite, 0, -170)
         projectile.y -= 22
     } else if (controller.B.isPressed() && !gameActive) {
         gameActive = true;
