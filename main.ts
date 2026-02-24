@@ -11,6 +11,19 @@ namespace SpriteKind {
     export const Food1 = SpriteKind.create()
     export const Food2 = SpriteKind.create()
 }
+
+
+
+function levelUpdater(level: number){
+    numberOfEnemys = 3
+    numberOfEnemys = numberOfEnemys + level
+}
+
+function shopStore(){
+    levelUpdater(level)
+}
+
+let numberOfEnemys = 3
 info.setScore(0)
 info.setLife(1)
 let level: number = 1;
@@ -153,6 +166,7 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Loca
     }
 })
 
+
 game.onUpdateInterval(3000, function () {
     if (gameActive) {
         levelTracker.say("Level " + level, 5000)
@@ -187,6 +201,11 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
     let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
     bar.value -= bulletStrength
     sprites.destroy(sprite)
+    numberOfEnemys - 1
+    if (numberOfEnemys <= 0){
+        level + 1
+        shopStore()
+    }
 })
 statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
     let ranNum = randint(0, 8)
