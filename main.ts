@@ -117,7 +117,7 @@ game.onUpdateInterval(200, function () {
         . . . . . . 2 2 2 2 . . . . . .
         . . . . . . . . . . . . . . . .
         . . . . . . . . . . . . . . . .
-    `, cannonSprite, 0, -90)
+    `, cannonSprite, 0, -170)
         projectile.y -= 22
     } else if (controller.A.isPressed() && !gameActive) {
         gameActive = true;
