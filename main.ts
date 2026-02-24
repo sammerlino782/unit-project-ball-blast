@@ -180,10 +180,22 @@ function startLevel (level: number) {
 let enemies;
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, otherSprite: Sprite) {
     sprites.destroy(otherSprite)
+    info.changeLifeBy(-1)
     music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
-    controller.moveSprite(cannonSprite, 0, 0)
-    gameActive = false;
+})
 
+info.onLifeZero(function() {
+    let contiune: boolean = game.ask("Coutinue?")
+    if (contiune) {
+        info.setLife(1)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+        levelUpdater(level)
+        startLevel(level)
+        
+    } else {
+        game.gameOver(false)
+        controller.moveSprite(cannonSprite, 0, 0)
+    }
     enemies = sprites.allOfKind(SpriteKind.Enemy)
 
     for (let i = 0; i < enemies.length; i++) {
