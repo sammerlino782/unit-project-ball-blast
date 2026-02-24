@@ -119,7 +119,7 @@ game.onUpdateInterval(200, function () {
         . . . . . . . . . . . . . . . .
     `, cannonSprite, 0, -170)
         projectile.y -= 22
-    } else if (controller.A.isPressed() && !gameActive) {
+    } else if (controller.B.isPressed() && !gameActive) {
         gameActive = true;
         startLevel(level)
         controller.moveSprite(cannonSprite, 90, 0)
@@ -156,9 +156,7 @@ function createBall () {
     ball.vx = randint(-50, 50)
 }
 
-// controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
-    //createBall()
-// })
+
 // making sprite bounce less high each bounce
 scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Location) {
     if (sprite.ay <= 300 && sprite.y == 168) {
@@ -171,7 +169,7 @@ game.onUpdateInterval(3000, function () {
     if (gameActive) {
         levelTracker.say("Level " + level, 5000)
     } else if (!gameActive) {
-        levelTracker.say("Press A to start!", 5000)
+        levelTracker.say("Press B to start!", 5000)
     }
 })
 
@@ -184,19 +182,17 @@ function startLevel (level: number) {
     }
 }
 
+let enemies;
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, otherSprite: Sprite) {
     sprites.destroy(otherSprite)
-    info.changeLifeBy(-1)
     music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
     controller.moveSprite(cannonSprite, 0, 0)
-})
-info.onLifeZero(function() {
-    let contiune: boolean = game.ask("Coutinue?")
-    if (contiune) {
-        info.setLife(1)
-        startGame()
-    } else {
-        game.gameOver(false)
+    gameActive = false;
+
+    enemies = sprites.allOfKind(SpriteKind.Enemy)
+
+    for (let i = 0; i < enemies.length; i++) {
+        enemies[i].destroy()
     }
 })
 
