@@ -26,7 +26,7 @@ function shopStore(){
 let numberOfEnemys = 3
 info.setScore(0)
 info.setLife(1)
-let level: number = 0;
+let level: number = 1;
 let cannonSprite: Sprite;
 let levelTracker: Sprite;
 let bulletStrength = 15;
@@ -209,11 +209,12 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
     let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
     bar.value -= bulletStrength
     sprites.destroy(sprite)
-    numberOfEnemys - 1
+    numberOfEnemys == numberOfEnemys - 1
     if (numberOfEnemys <= 0){
         level + 1
         shopStore()
     }
+    console.log(numberOfEnemys)
 })
 statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
     let ranNum = randint(0, 8)
@@ -235,6 +236,8 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
     if (enemy) {
         enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
         sprites.destroy(enemy, effects.disintegrate, 50)
+        numberOfEnemys - 1
+        console.log(numberOfEnemys)
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function(sprite: Sprite, otherSprite: Sprite) {
