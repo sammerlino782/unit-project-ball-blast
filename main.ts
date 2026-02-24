@@ -195,6 +195,7 @@ info.onLifeZero(function() {
     } else {
         game.gameOver(false)
         controller.moveSprite(cannonSprite, 0, 0)
+        gameActive = false;
     }
     enemies = sprites.allOfKind(SpriteKind.Enemy)
 
