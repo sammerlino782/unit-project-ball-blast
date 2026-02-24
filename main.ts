@@ -156,9 +156,9 @@ function createBall () {
     ball.vx = randint(-50, 50)
 }
 
-controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
-    createBall()
-})
+// controller.A.onEvent(ControllerButtonEvent.Pressed, function() {
+    //createBall()
+// })
 // making sprite bounce less high each bounce
 scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Location) {
     if (sprite.ay <= 300 && sprite.y == 168) {
@@ -175,27 +175,31 @@ game.onUpdateInterval(3000, function () {
     }
 })
 
-let enemiesPerLevel = [4, 5, 7, 8, 11, 13]
+
 
 function startLevel (level: number) {
-    let enemyCount = enemiesPerLevel[level];
+    let enemyCount = numberOfEnemys;
     for (let i = 0; i < enemyCount; i++) {
         createBall()
     }
 }
 
-let enemies;
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, otherSprite: Sprite) {
     sprites.destroy(otherSprite)
-    gameActive = false
+    info.changeLifeBy(-1)
     music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
     controller.moveSprite(cannonSprite, 0, 0)
-    enemies = sprites.allOfKind(SpriteKind.Enemy)
-
-    for (let i = 0; i < enemies.length; i++) {
-        enemies[i].destroy()
+})
+info.onLifeZero(function() {
+    let contiune: boolean = game.ask("Coutinue?")
+    if (contiune) {
+        info.setLife(1)
+        startGame()
+    } else {
+        game.gameOver(false)
     }
 })
+
 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
     let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
