@@ -142,7 +142,7 @@ function createBall() {
 
 // create enemys which are called balls, repated by numberOfEnemys
 
-function startLevel() {
+function createEnemies() {
     for (let i = 0; i < spawnAmountOfEnemys; i++) {
         createBall()
         pause(1000)
@@ -183,7 +183,7 @@ game.onUpdateInterval(3000, function () {
 controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
     if (!gameActive) {
         gameActive = true;
-        startLevel()
+        createEnemies()
         controller.moveSprite(cannonSprite, 90, 0)
     }
 })
@@ -210,7 +210,7 @@ info.onLifeZero(function() {
         gameActive = false;
     }
     numberOfEnemys = spawnAmountOfEnemys
-    startLevel()
+    createEnemies()
     // enemies = sprites.allOfKind(SpriteKind.Enemy)
 
     // for (let i = 0; i < enemies.length; i++) {
@@ -242,11 +242,9 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
         coin.setVelocity(0, 80)
     }
 
-    if (enemy) {
-        enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
-        sprites.destroy(enemy, effects.disintegrate, 50)
-        numberOfEnemys -= 1
-    }
+    enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
+    sprites.destroy(enemy, effects.disintegrate, 50)
+    numberOfEnemys -= 1
 })
 
 
@@ -269,7 +267,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
         spawnAmountOfEnemys += 1
         numberOfEnemys = spawnAmountOfEnemys
         level += 1
-        startLevel()
+        createEnemies()
     }
 })
 
