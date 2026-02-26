@@ -17,6 +17,7 @@ let numberOfEnemys = 3
 info.setScore(0)
 info.setLife(1)
 let level: number = 1;
+let damageIncreaseAmount = 1.5;
 let cannonSprite: Sprite;
 let levelTracker: Sprite;
 let bulletStrength = 15;
@@ -89,7 +90,24 @@ function startGame() {
 
 //  shopStore is the update to increase your own stats at cost of score
 function shopStore(){
-    
+    let bulletAmount = sprites.create(img`
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . 5 . . . . . . . .
+        . . . . . . 5 5 5 . . . . . . .
+        . . . . . . 5 5 5 . . . . . . .
+        . . . . . . 5 5 5 . . . . . . .
+        . . . . . . 5 5 5 . . . . . . .
+        . . . . . . 5 5 5 . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+    `, SpriteKind.Player)
 }
 
 // creates enemy wth values for each of them
@@ -125,8 +143,9 @@ function createBall() {
 // create enemys which are called balls, repated by numberOfEnemys
 
 function startLevel() {
-    for (let i = 0; i < numberOfEnemys; i++) {
+    for (let i = 0; i < spawnAmountOfEnemys; i++) {
         createBall()
+        pause(1000)
     }
 }
 
@@ -242,8 +261,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite: Sprite,
 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
     let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
-    // doubled to make enemys die easier
-    bar.value -= 2 * bulletStrength
+    // increased damage enemy takes
+    bar.value -= damageIncreaseAmount * bulletStrength
     sprites.destroy(sprite)
     numberOfEnemys == numberOfEnemys - 1
     if (numberOfEnemys <= 0) {
