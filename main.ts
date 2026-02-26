@@ -14,18 +14,17 @@ namespace SpriteKind {
 
 
 
-function updateEnemyNumbers(level: number){
+function updateEnemyNumbers(){
     level += 1
-    numberOfEnemys = 3
-    numberOfEnemys == numberOfEnemys + 1
+    currentSpawnOfEnemys += 1
+    numberOfEnemys = currentSpawnOfEnemys
     startLevel()
-
 }
 
 function shopStore(){
-    updateEnemyNumbers(level)
+    updateEnemyNumbers()
 }
-
+let currentSpawnOfEnemys: number = 3
 let numberOfEnemys = 3
 info.setScore(0)
 info.setLife(1)
@@ -38,9 +37,11 @@ let gameActive = false;
 
 
 game.onUpdateInterval(500, function() {
+    // runs when there are no enemys left
     if (numberOfEnemys <= 0) {
-        updateEnemyNumbers(level)
+        updateEnemyNumbers()
     }
+    console.log(numberOfEnemys <= 0)
 })
 
 // Creating player, setting background and tilemap
@@ -210,7 +211,9 @@ info.onLifeZero(function() {
     if (contiune) {
         info.setLife(1)
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-        updateEnemyNumbers(level)
+        currentSpawnOfEnemys -= 1
+        level -= 1
+        updateEnemyNumbers()
         
     } else {
         game.gameOver(false)
@@ -227,7 +230,8 @@ info.onLifeZero(function() {
 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
     let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
-    bar.value -= bulletStrength
+    // doubled to make enemys die easier
+    bar.value -= 2 * bulletStrength
     sprites.destroy(sprite)
     numberOfEnemys == numberOfEnemys - 1
     if (numberOfEnemys <= 0){
