@@ -28,7 +28,7 @@ let currentSpawnOfEnemys: number = 3
 let numberOfEnemys = 3
 info.setScore(0)
 info.setLife(1)
-let level: number = 0;
+let level: number = 1;
 let cannonSprite: Sprite;
 let levelTracker: Sprite;
 let bulletStrength = 15;
