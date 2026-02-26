@@ -125,12 +125,23 @@ game.onUpdateInterval(200, function () {
     . . . . 4 . . . . .
 `, cannonSprite, 0, -170)
         projectile.y -= 22
-    } else if (controller.B.isPressed() && !gameActive) {
+    } 
+
+})
+controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
+    if (!gameActive) {
         gameActive = true;
         startLevel()
         controller.moveSprite(cannonSprite, 90, 0)
     }
+})
 
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (!gameActive) {
+        gameActive = true;
+        startLevel()
+        controller.moveSprite(cannonSprite, 90, 0)
+    }
 })
 
 function createBall () {
