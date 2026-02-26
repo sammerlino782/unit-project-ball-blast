@@ -89,25 +89,8 @@ function startGame() {
 }
 
 //  shopStore is the update to increase your own stats at cost of score
-function shopStore(){
-    let bulletAmount = sprites.create(img`
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . 5 . . . . . . . .
-        . . . . . . 5 5 5 . . . . . . .
-        . . . . . . 5 5 5 . . . . . . .
-        . . . . . . 5 5 5 . . . . . . .
-        . . . . . . 5 5 5 . . . . . . .
-        . . . . . . 5 5 5 . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-    `, SpriteKind.Player)
+function rougeLite(){
+
 }
 
 // creates enemy wth values for each of them
@@ -199,18 +182,7 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Loca
 
 // destorys current sprites and asks for you want to Coutinue
 info.onLifeZero(function() {
-    let continueLevel: boolean = game.ask("Continue?")
-    if (continueLevel) {
-        info.setLife(1)
-        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-        // to stop enemies amount to increase & level increase
-    } else {
-        game.gameOver(false)
-        controller.moveSprite(cannonSprite, 0, 0)
-        gameActive = false;
-    }
-    numberOfEnemys = spawnAmountOfEnemys
-    createEnemies()
+    game.gameOver(false)
     // enemies = sprites.allOfKind(SpriteKind.Enemy)
 
     // for (let i = 0; i < enemies.length; i++) {
