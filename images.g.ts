@@ -113,6 +113,25 @@ c b d d d d d 5 5 5 5 5 5 5 b .
 . . . . . . . 2 2 2 . . . . . . 
 . . . . . . . . 2 . . . . . . . 
 `;
+            case "image7":
+            case "powerup":return img`
+. . . . e e e e e e e . . . . . 
+. . e e d d d d d d d e e . . . 
+. e d d d e e e e e d d d e . . 
+. e d d e d d d d d e d d e . . 
+e d d d e d d d d d e d d d e . 
+e d d d d d d d d d e d d d e . 
+e d d d d d d d d d e d d d e . 
+e d d d d d d d e e d d d d e . 
+e d d d d d d e d d d d d d e . 
+e d d d d d d e d d d d d d e . 
+e d d d d d d e d d d d d d e . 
+. e d d d d d d d d d d d e . . 
+. e d d d d d e d d d d d e . . 
+. . e e d d d d d d d e e . . . 
+. . . . e e e e e e e . . . . . 
+. . . . . . . . . . . . . . . . 
+`;
         }
         return null;
     })

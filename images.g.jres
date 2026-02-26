@@ -29,6 +29,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "Health"
     },
+    "image7": {
+        "data": "hwQQABAAAAAAAO7u7g4AAADu3d3d7Q4A4N3d3d3d7QDg3d3d3d3tAN7t3t3d3d0O3t7d3d3d3Q7e3t3d3d3dDt7e3d3u3t4O3t7d7d3d3Q7e3t3t3d3dDt7t7t7d3d0O4N3d3d3d7QDg3d3d3d3tAADu3d3d7Q4AAADu7u4OAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "powerup"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
