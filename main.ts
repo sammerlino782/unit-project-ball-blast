@@ -13,14 +13,14 @@ namespace SpriteKind {
 }
 
 
-
+// increases enemy amount & level
 function updateEnemyNumbers(){
     level += 1
     currentSpawnOfEnemys += 1
     numberOfEnemys = currentSpawnOfEnemys
     startLevel()
 }
-
+//  shopStore is the update to increase your own stats at cost of score
 function shopStore(){
     updateEnemyNumbers()
 }
@@ -129,6 +129,8 @@ game.onUpdateInterval(200, function () {
     } 
 
 })
+
+
 controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
     if (!gameActive) {
         gameActive = true;
@@ -144,7 +146,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         controller.moveSprite(cannonSprite, 90, 0)
     }
 })
-
+// creates enemy wth values for each of them
 function createBall () {
     let ball = sprites.create(img`
         . . . . . . . . . . . . . . . .
@@ -191,7 +193,7 @@ game.onUpdateInterval(3000, function () {
     }
 })
 
-
+// create enemys which are called balls, repated by numberOfEnemys
 
 function startLevel () {
     for (let i = 0; i < numberOfEnemys; i++) {
@@ -200,17 +202,19 @@ function startLevel () {
 }
 
 let enemies;
+// destorys senemy sprite that overlaps Player, and decreases life by 1 for player
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, otherSprite: Sprite) {
     sprites.destroy(otherSprite)
     info.changeLifeBy(-1)
     music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
 })
-
+// destorys current sprites and asks for you want to Coutinue
 info.onLifeZero(function() {
     let contiune: boolean = game.ask("Coutinue?")
     if (contiune) {
         info.setLife(1)
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+        // to stop enemies amount to increase & level increase
         currentSpawnOfEnemys -= 1
         level -= 1
         updateEnemyNumbers()
@@ -227,6 +231,7 @@ info.onLifeZero(function() {
     //}
 })
 
+// Projectile onOverlap decrease enemy Health 
 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
     let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
@@ -239,6 +244,9 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
     }
     console.log(numberOfEnemys)
 })
+
+// health on zero of enemy, enemys dies and has chance to spawn coins
+
 statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
     let ranNum = randint(0, 8)
     let enemy = status.spriteAttachedTo()
@@ -263,6 +271,9 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
         numberOfEnemys -= 1
     }
 })
+
+// coins overlap for amount of score
+
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function(sprite: Sprite, otherSprite: Sprite) {
     info.changeScoreBy(1)
     sprites.destroy(otherSprite)
