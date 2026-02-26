@@ -89,7 +89,7 @@ function startGame() {
 
 //  shopStore is the update to increase your own stats at cost of score
 function shopStore(){
- 
+    
 }
 
 // creates enemy wth values for each of them
@@ -190,6 +190,8 @@ info.onLifeZero(function() {
         controller.moveSprite(cannonSprite, 0, 0)
         gameActive = false;
     }
+    numberOfEnemys = spawnAmountOfEnemys
+    startLevel()
     // enemies = sprites.allOfKind(SpriteKind.Enemy)
 
     // for (let i = 0; i < enemies.length; i++) {
