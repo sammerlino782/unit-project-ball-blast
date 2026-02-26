@@ -12,18 +12,6 @@ namespace SpriteKind {
     export const Food2 = SpriteKind.create()
 }
 
-
-// increases enemy amount & level
-function updateEnemyNumbers(){
-    level += 1
-    currentSpawnOfEnemys += 1
-    numberOfEnemys = currentSpawnOfEnemys
-    startLevel()
-}
-//  shopStore is the update to increase your own stats at cost of score
-function shopStore(){
-    updateEnemyNumbers()
-}
 let currentSpawnOfEnemys: number = 3
 let numberOfEnemys = 3
 info.setScore(0)
@@ -36,13 +24,9 @@ let gameActive = false;
 
 
 
-game.onUpdateInterval(500, function() {
-    // runs when there are no enemys left
-    if (numberOfEnemys <= 0) {
-        updateEnemyNumbers()
-    }
-    console.log(numberOfEnemys <= 0)
-})
+// Initializing game
+startGame()
+game.splash("Welcome to Ball Blast!")
 
 // Creating player, setting background and tilemap
 function startGame() {
@@ -103,51 +87,20 @@ function startGame() {
     controller.moveSprite(cannonSprite, 90, 0)
 }
 
-// Initializing game
-startGame()
-game.splash("Welcome to Ball Blast!")
+// increases enemy amount & level
+function updateEnemyNumbers(){
+    level += 1
+    currentSpawnOfEnemys += 1
+    numberOfEnemys = currentSpawnOfEnemys
+    startLevel()
+}
+//  shopStore is the update to increase your own stats at cost of score
+function shopStore(){
+    
+}
 
-
-// Cannon shooting functionality, when space pressed down
-// the cannon shoots a projectile
-game.onUpdateInterval(200, function () {
-    if (controller.A.isPressed() && gameActive) {
-       let projectile = sprites.createProjectileFromSprite(img`
-    . . . . f f . . . .
-    . . . f 1 5 f . . .
-    . . . f 5 5 f . . .
-    . . . f 5 2 f . . .
-    . . . f 2 2 f . . .
-    . . . 5 5 5 5 . 4 .
-    . . 4 5 5 . 5 . . 4
-    4 . . 5 5 . . 5 . .
-    . . 5 . 4 . 5 . . .
-    . . . . . . . . 4 .
-    . . . . 4 . . . . .
-`, cannonSprite, 0, -170)
-        projectile.y -= 22
-    } 
-
-})
-
-
-controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
-    if (!gameActive) {
-        gameActive = true;
-        startLevel()
-        controller.moveSprite(cannonSprite, 90, 0)
-    }
-})
-
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!gameActive) {
-        gameActive = true;
-        startLevel()
-        controller.moveSprite(cannonSprite, 90, 0)
-    }
-})
 // creates enemy wth values for each of them
-function createBall () {
+function createBall() {
     let ball = sprites.create(img`
         . . . . . . . . . . . . . . . .
         . . . . 1 1 1 1 1 1 1 . . . . .
@@ -176,14 +129,43 @@ function createBall () {
     ball.vx = randint(-50, 50)
 }
 
+// create enemys which are called balls, repated by numberOfEnemys
 
-// making sprite bounce less high each bounce
-scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Location) {
-    if (sprite.ay <= 300 && sprite.y == 168) {
-        sprite.ay += 5
+function startLevel() {
+    for (let i = 0; i < numberOfEnemys; i++) {
+        createBall()
     }
+}
+
+game.onUpdateInterval(500, function() {
+    // runs when there are no enemys left
+    if (numberOfEnemys <= 0) {
+        updateEnemyNumbers()
+    }
+    console.log(numberOfEnemys <= 0)
 })
 
+// Cannon shooting functionality, when space pressed down
+// the cannon shoots a projectile
+game.onUpdateInterval(200, function () {
+    if (controller.A.isPressed() && gameActive) {
+       let projectile = sprites.createProjectileFromSprite(img`
+    . . . . f f . . . .
+    . . . f 1 5 f . . .
+    . . . f 5 5 f . . .
+    . . . f 5 2 f . . .
+    . . . f 2 2 f . . .
+    . . . 5 5 5 5 . 4 .
+    . . 4 5 5 . 5 . . 4
+    4 . . 5 5 . . 5 . .
+    . . 5 . 4 . 5 . . .
+    . . . . . . . . 4 .
+    . . . . 4 . . . . .
+`, cannonSprite, 0, -170)
+        projectile.y -= 22
+    } 
+
+})
 
 game.onUpdateInterval(3000, function () {
     if (gameActive) {
@@ -193,24 +175,34 @@ game.onUpdateInterval(3000, function () {
     }
 })
 
-// create enemys which are called balls, repated by numberOfEnemys
 
-function startLevel () {
-    for (let i = 0; i < numberOfEnemys; i++) {
-        createBall()
+controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
+    if (!gameActive) {
+        gameActive = true;
+        startLevel()
+        controller.moveSprite(cannonSprite, 90, 0)
     }
-}
-
-let enemies;
-// destorys senemy sprite that overlaps Player, and decreases life by 1 for player
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function(sprite: Sprite, otherSprite: Sprite) {
-    sprites.destroy(otherSprite)
-    info.changeLifeBy(-1)
-    music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
 })
+
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (!gameActive) {
+        gameActive = true;
+        startLevel()
+        controller.moveSprite(cannonSprite, 90, 0)
+    }
+})
+
+// making sprite bounce less high each bounce
+scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Location) {
+    if (sprite.ay <= 300 && sprite.y == 168) {
+        sprite.ay += 5
+    }
+})
+
+
 // destorys current sprites and asks for you want to Coutinue
 info.onLifeZero(function() {
-    let contiune: boolean = game.ask("Coutinue?")
+    let contiune: boolean = game.ask("Conton?")
     if (contiune) {
         info.setLife(1)
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
@@ -232,18 +224,6 @@ info.onLifeZero(function() {
 })
 
 // Projectile onOverlap decrease enemy Health 
-
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
-    let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
-    // doubled to make enemys die easier
-    bar.value -= 2 * bulletStrength
-    sprites.destroy(sprite)
-    numberOfEnemys == numberOfEnemys - 1
-    if (numberOfEnemys <= 0){
-        shopStore()
-    }
-    console.log(numberOfEnemys)
-})
 
 // health on zero of enemy, enemys dies and has chance to spawn coins
 
@@ -271,6 +251,28 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
         numberOfEnemys -= 1
     }
 })
+
+
+let enemies;
+// destorys senemy sprite that overlaps Player, and decreases life by 1 for player
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
+    sprites.destroy(otherSprite)
+    info.changeLifeBy(-1)
+    music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
+})
+
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
+    let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
+    // doubled to make enemys die easier
+    bar.value -= 2 * bulletStrength
+    sprites.destroy(sprite)
+    numberOfEnemys == numberOfEnemys - 1
+    if (numberOfEnemys <= 0) {
+        shopStore()
+    }
+    console.log(numberOfEnemys)
+})
+
 
 // coins overlap for amount of score
 
