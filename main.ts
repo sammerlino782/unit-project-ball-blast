@@ -184,13 +184,6 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
     }
 })
 
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!gameActive) {
-        gameActive = true;
-        startLevel()
-        controller.moveSprite(cannonSprite, 90, 0)
-    }
-})
 
 // making sprite bounce less high each bounce
 scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Location) {
