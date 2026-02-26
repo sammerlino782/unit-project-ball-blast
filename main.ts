@@ -12,7 +12,7 @@ namespace SpriteKind {
     export const Food2 = SpriteKind.create()
 }
 
-let currentSpawnOfEnemys: number = 3
+let spawnAmountOfEnemys: number = 3
 let numberOfEnemys = 3
 info.setScore(0)
 info.setLife(1)
@@ -87,16 +87,9 @@ function startGame() {
     controller.moveSprite(cannonSprite, 90, 0)
 }
 
-// increases enemy amount & level
-function updateEnemyNumbers(){
-    level += 1
-    currentSpawnOfEnemys += 1
-    numberOfEnemys = currentSpawnOfEnemys
-    startLevel()
-}
 //  shopStore is the update to increase your own stats at cost of score
 function shopStore(){
-    
+ 
 }
 
 // creates enemy wth values for each of them
@@ -136,14 +129,6 @@ function startLevel() {
         createBall()
     }
 }
-
-game.onUpdateInterval(500, function() {
-    // runs when there are no enemys left
-    if (numberOfEnemys <= 0) {
-        updateEnemyNumbers()
-    }
-    console.log(numberOfEnemys <= 0)
-})
 
 // Cannon shooting functionality, when space pressed down
 // the cannon shoots a projectile
@@ -200,10 +185,6 @@ info.onLifeZero(function() {
         info.setLife(1)
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
         // to stop enemies amount to increase & level increase
-        currentSpawnOfEnemys -= 1
-        level -= 1
-        updateEnemyNumbers()
-        
     } else {
         game.gameOver(false)
         controller.moveSprite(cannonSprite, 0, 0)
@@ -246,6 +227,7 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
 })
 
 
+
 let enemies;
 // destorys senemy sprite that overlaps Player, and decreases life by 1 for player
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
@@ -261,9 +243,11 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
     sprites.destroy(sprite)
     numberOfEnemys == numberOfEnemys - 1
     if (numberOfEnemys <= 0) {
-        shopStore()
+        spawnAmountOfEnemys += 1
+        numberOfEnemys = spawnAmountOfEnemys
+        level += 1
+        startLevel()
     }
-    console.log(numberOfEnemys)
 })
 
 
