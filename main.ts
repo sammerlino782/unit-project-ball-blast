@@ -204,21 +204,23 @@ info.onLifeZero(function() {
 statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
     let ranNum = randint(0, 8)
     let enemy = status.spriteAttachedTo()
-    if (ranNum <= 4) {
-    } else if (ranNum > 4 && ranNum <=5 ){
-        let myCoin1 = sprites.create(assets.image`Coin1`, SpriteKind.Food)
-        myCoin1.setPosition(enemy.x, enemy.y)
-        myCoin1.setVelocity(0, 80)
-    } else if (ranNum > 6 && ranNum <= 7) {
-        let myCoin2 = sprites.create(assets.image`Coin2`, SpriteKind.Food1)
-        myCoin2.setPosition(enemy.x, enemy.y)
-        myCoin2.setVelocity(0, 80)
-    } else if (ranNum >= 8) {
-        let myCoin5 = sprites.create(assets.image`Coin5`, SpriteKind.Food2)
-        myCoin5.setPosition(enemy.x, enemy.y)
-        myCoin5.setVelocity(0, 80)
+    let coinSkins = [assets.image`Coin1`, assets.image`Coin2`, assets.image`Coin5`]
+    let coinSkinSelected: Image;
+
+    if (ranNum > 4) {
+        if (ranNum > 4) {
+            coinSkinSelected = coinSkins[0]
+        } else if (ranNum > 6) {
+            coinSkinSelected = coinSkins[1]
+        } else if (ranNum >= 8) {
+            coinSkinSelected = coinSkins[2]
+        }
+        let coin = sprites.create(coinSkinSelected, SpriteKind.Food)
+
+        coin.setPosition(enemy.x, enemy.y)
+        coin.setVelocity(0, 80)
     }
-    
+
     if (enemy) {
         enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
         sprites.destroy(enemy, effects.disintegrate, 50)
