@@ -209,12 +209,12 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
     let coinSkins = [assets.image`Coin1`, assets.image`Coin2`, assets.image`Coin5`]
     let coinSkinSelected: Image;
 
-    if (ranNum > 4) {
-        if (ranNum > 4) {
+    if (ranNum > 3) {
+        if (ranNum >= 8) {
             coinSkinSelected = coinSkins[0]
         } else if (ranNum > 6) {
             coinSkinSelected = coinSkins[1]
-        } else if (ranNum >= 8) {
+        } else if (ranNum > 3) {
             coinSkinSelected = coinSkins[2]
         }
         let coin = sprites.create(coinSkinSelected, SpriteKind.Food)
