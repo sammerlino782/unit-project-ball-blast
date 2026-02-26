@@ -14,22 +14,22 @@ namespace SpriteKind {
 
 
 
-function levelUpdater(level: number){
-    numberOfEnemys = 3
-    numberOfEnemys = numberOfEnemys + level
+function updateEnemyNumbers(level: number){
     level += 1
-    startLevel(level)
+    numberOfEnemys = 3
+    numberOfEnemys == numberOfEnemys + 1
+    startLevel()
 
 }
 
 function shopStore(){
-    levelUpdater(level)
+    updateEnemyNumbers(level)
 }
 
 let numberOfEnemys = 3
 info.setScore(0)
 info.setLife(1)
-let level: number = 1;
+let level: number = 0;
 let cannonSprite: Sprite;
 let levelTracker: Sprite;
 let bulletStrength = 15;
@@ -39,7 +39,7 @@ let gameActive = false;
 
 game.onUpdateInterval(500, function() {
     if (numberOfEnemys <= 0) {
-        levelUpdater
+        updateEnemyNumbers(level)
     }
 })
 
@@ -127,7 +127,7 @@ game.onUpdateInterval(200, function () {
         projectile.y -= 22
     } else if (controller.B.isPressed() && !gameActive) {
         gameActive = true;
-        startLevel(level)
+        startLevel()
         controller.moveSprite(cannonSprite, 90, 0)
     }
 
@@ -173,7 +173,7 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Loca
 
 game.onUpdateInterval(3000, function () {
     if (gameActive) {
-        levelTracker.say("Level " + level, 5000)
+        levelTracker.say("Level " + level, 3000)
     } else if (!gameActive) {
         levelTracker.say("Press B to start!", 5000)
     }
@@ -181,9 +181,8 @@ game.onUpdateInterval(3000, function () {
 
 
 
-function startLevel (level: number) {
-    let enemyCount = numberOfEnemys;
-    for (let i = 0; i < enemyCount; i++) {
+function startLevel () {
+    for (let i = 0; i < numberOfEnemys; i++) {
         createBall()
     }
 }
@@ -200,7 +199,7 @@ info.onLifeZero(function() {
     if (contiune) {
         info.setLife(1)
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
-        levelUpdater(level)
+        updateEnemyNumbers(level)
         
     } else {
         game.gameOver(false)
@@ -221,7 +220,6 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
     sprites.destroy(sprite)
     numberOfEnemys == numberOfEnemys - 1
     if (numberOfEnemys <= 0){
-        level + 1
         shopStore()
     }
     console.log(numberOfEnemys)
