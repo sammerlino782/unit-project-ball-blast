@@ -195,8 +195,8 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Loca
 
 // destorys current sprites and asks for you want to Coutinue
 info.onLifeZero(function() {
-    let contiune: boolean = game.ask("Conton?")
-    if (contiune) {
+    let continueLevel: boolean = game.ask("Continue?")
+    if (continueLevel) {
         info.setLife(1)
         sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
         // to stop enemies amount to increase & level increase
