@@ -49,6 +49,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "scoreboardModel"
     },
+    "image11": {
+        "data": "hwQKAAsAAAAAAABAAAAAAAAAAAAAAAAAAAAABAUAAADw/19VAAAAAB9VUlUEBAAAXyVSAAAAAADw/18FBQAAAAAAAFAAAAAAAABAAEAAAAAAAAAEAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "bulletModel"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

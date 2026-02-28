@@ -203,6 +203,20 @@ bfdbccccbcbdfd......dfdbcbccccbdfb
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
 `;
+            case "image11":
+            case "bulletModel":return img`
+. . . . f f . . . . 
+. . . f 1 5 f . . . 
+. . . f 5 5 f . . . 
+. . . f 5 2 f . . . 
+. . . f 2 2 f . . . 
+. . . 5 5 5 5 . 4 . 
+. . 4 5 5 . 5 . . 4 
+4 . . 5 5 . . 5 . . 
+. . 5 . 4 . 5 . . . 
+. . . . . . . . 4 . 
+. . . . 4 . . . . . 
+`;
         }
         return null;
     })
