@@ -171,7 +171,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
     // Increasing damage on enemy by bulletStrength
     bar.value -= damageIncreaseAmount * bulletStrength
     sprites.destroy(sprite)
-    numberOfEnemys -= 1
+    numberOfEnemys == numberOfEnemys - 1
     if (numberOfEnemys <= 0) {
         spawnAmountOfEnemys += 1
         numberOfEnemys = spawnAmountOfEnemys
