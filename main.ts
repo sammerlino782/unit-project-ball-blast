@@ -30,24 +30,7 @@ game.splash("Welcome to Ball Blast!")
 // Creating player, setting background and tilemap
 function startGame() {
     scene.setBackgroundColor(9)
-    levelTracker = sprites.create(img`
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-        9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
-    `, SpriteKind.Scoreboard)
+    levelTracker = sprites.create(assets.image`scoreboardModel`, SpriteKind.Scoreboard)
     levelTracker.setPosition(70, 20)
     cannonSprite = sprites.create(assets.image`cannonModel`, SpriteKind.Player)
     cannonSprite.x = 75; cannonSprite.y = 161
@@ -188,7 +171,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
     // Increasing damage on enemy by bulletStrength
     bar.value -= damageIncreaseAmount * bulletStrength
     sprites.destroy(sprite)
-    numberOfEnemys == numberOfEnemys - 1
+    numberOfEnemys -= 1
     if (numberOfEnemys <= 0) {
         spawnAmountOfEnemys += 1
         numberOfEnemys = spawnAmountOfEnemys
