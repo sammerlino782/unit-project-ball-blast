@@ -8,8 +8,7 @@ namespace userconfig {
 // Code for making a new spritekind
 namespace SpriteKind {
     export const Scoreboard = SpriteKind.create()
-    export const Food1 = SpriteKind.create()
-    export const Food2 = SpriteKind.create()
+    export const Coin = SpriteKind.create()
 }
 
 let spawnAmountOfEnemys: number = 3
@@ -22,7 +21,6 @@ let cannonSprite: Sprite;
 let levelTracker: Sprite;
 let bulletStrength = 15;
 let gameActive = false;
-
 
 
 // Initializing game
@@ -89,11 +87,11 @@ function startGame() {
 }
 
 //  shopStore is the update to increase your own stats at cost of score
-function rougeLite(){
+function rougeLite() {
 
 }
 
-// creates enemy wth values for each of them
+// Creates an individual enemy
 function createBall() {
     let ball = sprites.create(img`
         . . . . . . . . . . . . . . . .
@@ -123,8 +121,7 @@ function createBall() {
     ball.vx = randint(-50, 50)
 }
 
-// create enemys which are called balls, repated by numberOfEnemys
-
+// Calls createBall() repeatedly to make enemies
 function createEnemies() {
     for (let i = 0; i < spawnAmountOfEnemys; i++) {
         createBall()
@@ -180,7 +177,7 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Loca
 })
 
 
-// destorys current sprites and asks for you want to Coutinue
+// destroys current sprites and asks for you want to continue
 info.onLifeZero(function() {
     game.gameOver(false)
     // enemies = sprites.allOfKind(SpriteKind.Enemy)
@@ -192,23 +189,28 @@ info.onLifeZero(function() {
 
 // Projectile onOverlap decrease enemy Health 
 
-// health on zero of enemy, enemys dies and has chance to spawn coins
+// Health on death of enemy, the enemy dies and has a chance to drop coins
 
 statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
     let ranNum = randint(0, 8)
     let enemy = status.spriteAttachedTo()
+    // Array of sprite skins for easier organization
     let coinSkins = [assets.image`powerup`, assets.image`Coin1`, assets.image`Coin2`, assets.image`Coin5`]
     let coinSkinSelected: Image;
-
+    let coinWorth;
     if (ranNum > 3) {
         if (ranNum >= 8) {
-            coinSkinSelected = coinSkins[1]
+            coinSkinSelected = coinSkins[3]
+            coinWorth = 5
         } else if (ranNum > 6) {
             coinSkinSelected = coinSkins[2]
+            coinWorth = 2
         } else if (ranNum > 3) {
-            coinSkinSelected = coinSkins[3]
+            coinSkinSelected = coinSkins[1]
+            coinWorth = 1
         }
-        let coin = sprites.create(coinSkinSelected, SpriteKind.Food)
+        let coin = sprites.create(coinSkinSelected, SpriteKind.Coin)
+        coin.data["coinWorth"] = coinWorth;
 
         coin.setPosition(enemy.x, enemy.y)
         coin.setVelocity(0, 80)
@@ -222,7 +224,7 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
 
 
 let enemies;
-// destorys senemy sprite that overlaps Player, and decreases life by 1 for player
+// destroys the enemy sprite that overlaps with the player, and decreases life by 1 for player
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
     sprites.destroy(otherSprite)
     info.changeLifeBy(-1)
@@ -231,7 +233,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite: Sprite,
 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
     let bar = statusbars.getStatusBarAttachedTo(StatusBarKind.Health, otherSprite)
-    // increased damage enemy takes
+    // Increasing damage on enemy by bulletStrength
     bar.value -= damageIncreaseAmount * bulletStrength
     sprites.destroy(sprite)
     numberOfEnemys == numberOfEnemys - 1
@@ -243,18 +245,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
     }
 })
 
-
-// coins overlap for amount of score
-
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function(sprite: Sprite, otherSprite: Sprite) {
-    info.changeScoreBy(1)
-    sprites.destroy(otherSprite)
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Food1, function (sprite: Sprite, otherSprite: Sprite) {
-    info.changeScoreBy(2)
-    sprites.destroy(otherSprite)
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Food2, function (sprite: Sprite, otherSprite: Sprite) {
-    info.changeScoreBy(5)
-    sprites.destroy(otherSprite)
+// Updated coin logic to be concise
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Coin, function (player: Sprite, coin: Sprite) {
+    info.changeScoreBy(coin.data["coinWorth"])
+    sprites.destroy(coin)
 })
