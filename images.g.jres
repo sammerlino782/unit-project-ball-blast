@@ -39,20 +39,25 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "cannonModel"
     },
-    "image9": {
-        "data": "hwQQABAAAAAAABAREREAAAAQcXd3dxEAAHF3d3d3dwEAcXd3d3d3ARB3d3d3d3cXEHd3d3d3dxcQd3d3d3d3FxB3d3d3d3cXEHd3d3d3dxcQd3d3d3d3FxB3d3d3d3cXAHF3d3d3dwEAcXd3d3d3AQAQcXd3dxEAAAAQERERAAAAAAAAAAAAAA==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "enemyBall"
-    },
-    "image10": {
-        "data": "hwQQABAAAACZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmQ==",
-        "mimeType": "image/x-mkcd-f4",
-        "displayName": "scoreboardModel"
-    },
     "image11": {
         "data": "hwQKAAsAAAAAAABAAAAAAAAAAAAAAAAAAAAABAUAAADw/19VAAAAAB9VUlUEBAAAXyVSAAAAAADw/18FBQAAAAAAAFAAAAAAAABAAEAAAAAAAAAEAAAAAA==",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "bulletModel"
+    },
+    "image10": {
+        "data": "hwQQABAAAACZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmQ==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "infoboardModel"
+    },
+    "image9": {
+        "data": "hwQSABIAAAAAABEREREBAAAAAAAAEHd3d3cXAAAAAAAAcXd3d3d3AQAAAAAQd3d3d3d3FwAAAABxd3d3d3d3dwEAAABxd3d3d3d3dwEAAABxd3d3d3d3dwEAAABxd3d3d3d3dwEAAABxd3d3d3d3dwEAAABxd3d3d3d3dwEAAABxd3d3d3d3dwEAAABxd3d3d3d3dwEAAABxd3d3d3d3dwEAAAAQd3d3d3d3FwAAAAAAcXd3d3d3AQAAAAAAEHd3d3cXAAAAAAAAABEREREBAAAAAAAAAAAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "enemyBall"
+    },
+    "image12": {
+        "data": "hwQSABIAAAAAABEREREBAAAAAAAAEGZmZmYWAAAAAAAAYWZmZmZmAQAAAAAQZmZmZmZmFgAAAABhZmZmZvb/ZgEAAABhZmZmZp+ZbwEAAABh9v///5mZ+QEAAABhn5+fn5mZ+QEAAABhn5+fn5mZ+QEAAABhn5mZmZmZ+QEAAABh9v///5mZ+QEAAABhZmZmZp+ZbwEAAABhZmZmZvb/ZgEAAAAQZmZmZmZmFgAAAAAAYWZmZmZmAQAAAAAAEGZmZmYWAAAAAAAAABEREREBAAAAAAAAAAAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "frozenballModel"
     },
     "*": {
         "mimeType": "image/x-mkcd-f4",

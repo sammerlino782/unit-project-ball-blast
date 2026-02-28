@@ -11,7 +11,6 @@ namespace SpriteKind {
     export const Coin = SpriteKind.create()
     export const Powerup = SpriteKind.create()
 }
-
 let spawnAmountOfEnemys: number = 3
 let numberOfEnemys = 3
 info.setScore(0)
@@ -19,19 +18,23 @@ info.setLife(1)
 let level: number = 1;
 let damageIncreaseAmount = 1.5;
 let cannonSprite: Sprite;
-let levelTracker: Sprite;
+let infoBoard: Sprite;
 let bulletStrength = 15;
 let gameActive = false;
+let message: string;
 
 // Initializing game
 startGame()
 game.splash("Welcome to Ball Blast!")
 
+// Create scoreboard first
+infoBoard = sprites.create(assets.image`infoboardModel`, SpriteKind.Scoreboard)
+message = ("Press B to start!")
+infoBoard.setPosition(70, 20)
+
 // Creating player, setting background and tilemap
 function startGame() {
     scene.setBackgroundColor(9)
-    levelTracker = sprites.create(assets.image`scoreboardModel`, SpriteKind.Scoreboard)
-    levelTracker.setPosition(70, 20)
     cannonSprite = sprites.create(assets.image`cannonModel`, SpriteKind.Player)
     cannonSprite.x = 75; cannonSprite.y = 161
     tiles.setCurrentTilemap(tilemap`level1`)
@@ -68,29 +71,24 @@ function createEnemies() {
 // the cannon shoots a projectile
 game.onUpdateInterval(200, function () {
     if (controller.A.isPressed() && gameActive) {
-       let projectile = sprites.createProjectileFromSprite(assets.image`bulletModel`, cannonSprite, 0, -170)
+        let projectile = sprites.createProjectileFromSprite(assets.image`bulletModel`, cannonSprite, 0, -170)
         projectile.y -= 22
-    } 
+    }
 
 })
 
 game.onUpdateInterval(3000, function () {
-    if (gameActive) {
-        levelTracker.say("Level " + level, 3000)
-    } else if (!gameActive) {
-        levelTracker.say("Press B to start!", 5000)
-    }
+    infoBoard.say(message, 3000)
 })
 
-
-controller.B.onEvent(ControllerButtonEvent.Pressed, function() {
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!gameActive) {
+        message = "Level " + level
         gameActive = true;
         createEnemies()
         controller.moveSprite(cannonSprite, 90, 0)
     }
 })
-
 
 // making sprite bounce less high each bounce
 scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Location) {
@@ -99,28 +97,25 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Loca
     }
 })
 
-
 // destroys current sprites and asks for you want to continue
-info.onLifeZero(function() {
+info.onLifeZero(function () {
     game.gameOver(false)
-    // enemies = sprites.allOfKind(SpriteKind.Enemy)
-
-    // for (let i = 0; i < enemies.length; i++) {
-        // enemies[i].destroy()
-    //}
 })
-
-// Projectile onOverlap decrease enemy Health 
 
 // Health on death of enemy, the enemy dies and has a chance to drop coins
 
-statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
+statusbars.onZero(StatusBarKind.Health, function (status: StatusBarSprite) {
     let ranNum = randint(0, 10)
     let enemy = status.spriteAttachedTo()
     // Array of sprite skins for easier organization
     let coinSkins = [assets.image`powerup`, assets.image`Coin1`, assets.image`Coin2`, assets.image`Coin5`]
     let coinSkinSelected: Image;
     let coinWorth;
+
+    enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
+    sprites.destroy(enemy, effects.disintegrate, 50)
+    numberOfEnemys -= 1
+
     if (ranNum > 3) {
         if (ranNum === 10) {
             coinSkinSelected = coinSkins[0]
@@ -141,25 +136,32 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
             coinWorth = 1
         }
         let coin = sprites.create(coinSkinSelected, SpriteKind.Coin)
-        coin.data["coinWorth"] = coinWorth;
-
+        sprites.setDataNumber(coin, "coinWorth", coinWorth)
         coin.setPosition(enemy.x, enemy.y)
         coin.setVelocity(0, 80)
     }
 
-    enemy.setFlag(SpriteFlag.GhostThroughSprites, true)
-    sprites.destroy(enemy, effects.disintegrate, 50)
-    numberOfEnemys -= 1
 })
-
 
 // Making a powerup and returning the activated powerup
 let activatedPowerup: string;
-function activatePowerup (): string {
-    let ranNum = randint(0, 9)
+function activatePowerup(): string {
+    // For now, just the frozen powerup
+    let ranNum = randint(0, 2)
 
     if (ranNum <= 3) {
-        // TODO
+        // Freeze enemies powerup
+        info.startCountdown(5)
+        message = "Enemies frozen!"
+        enemies = sprites.allOfKind(SpriteKind.Enemy)
+
+        for (let i = 0; i < enemies.length; i++) {
+            enemies[i].setVelocity(0, 0)
+            enemies[i].ay = 0;
+            enemies[i].setImage(assets.image`frozenballModel`)
+            sprites.setDataBoolean(enemies[i], "frozen", true)
+        }
+
     } else if (ranNum <= 6) {
         // TODO
     } else {
@@ -168,6 +170,26 @@ function activatePowerup (): string {
     return activatedPowerup;
 }
 
+let enemy: Sprite;
+info.onCountdownEnd(function () {
+    enemies = sprites.allOfKind(SpriteKind.Enemy)
+    if (currentPowerup = "frozen") {
+        for (let i = 0; i < enemies.length; i++) {
+            enemy = enemies[i]
+            if (sprites.readDataBoolean(enemy, "frozen")) {
+                enemy.ay = 60
+                sprites.setDataBoolean(enemy, "frozen", false)
+                enemy.vx = randint(20, 50)
+                enemy.setImage(assets.image`enemyBall`)
+                // Too low for the player to reach
+                if (enemy.y >= 168) {
+                    enemy.destroy(effects.blizzard)
+                }
+            }
+        }
+    }
+    message = "Level " + level
+})
 
 let enemies;
 // destroys the enemy sprite that overlaps with the player, and decreases life by 1 for player
@@ -187,13 +209,14 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
         spawnAmountOfEnemys += 1
         numberOfEnemys = spawnAmountOfEnemys
         level += 1
+        message = "Level " + level
         createEnemies()
     }
 })
 
 // Updated coin logic to be concise
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Coin, function (player: Sprite, coin: Sprite) {
-    info.changeScoreBy(coin.data["coinWorth"])
+    info.changeScoreBy(sprites.readDataNumber(coin, "coinWorth"))
     sprites.destroy(coin)
 })
 
