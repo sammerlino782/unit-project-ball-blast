@@ -162,6 +162,8 @@ function activatePowerup(): string {
             sprites.setDataBoolean(enemies[i], "frozen", true)
         }
 
+        activatedPowerup = "frozen";
+
     } else if (ranNum <= 6) {
         // TODO
     } else {
