@@ -49,38 +49,7 @@ function startGame() {
         9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9
     `, SpriteKind.Scoreboard)
     levelTracker.setPosition(70, 20)
-    cannonSprite = sprites.create(img`
-        ............1ddddddddd............
-        ............1bcccccccd............
-        .............bccccccc.............
-        ............dcccccccc1............
-        ............dccccccccd............
-        ............dccccccccd............
-        ............dccccccccd............
-        ............dbcccccccd............
-        ............dbcccccccb............
-        ............bbcccccccb............
-        ...........1bccccccccb1...........
-        ...........1bccccccccc1...........
-        ...........1bccccccccc1...........
-        ...........1cccccccccc1...........
-        ..........1dccccccccccb1..........
-        ...........dbbbbbbbbbbb1..........
-        ....ddbbdd1dccccccccccd1ddbbdd....
-        ..1bffffffeecccccccccceeffffffb1..
-        .dcfcdccefffecccccccccfffeccdcfcd.
-        1bffc1cceefffecccccccfffeecc1cffb1
-        dfcccbccecccfeeeccceefccceccbcccfd
-        bfd1cfeecceefcee44eeffeecceecc1dfb
-        cfccbe44eeecffeeeeeeffccee44ebccfc
-        cfccce44ecccffbbbbbbffccce44ecccfc
-        cfddbceeebddfc1....1cfddbceecbddfc
-        bfdbccccbcbdfd......dfdbcbccccbdfb
-        1cfccdcc1ccfc1......1cfcc1ccdccfc1
-        .dffb1cc1bffd........dffb1cc1bffd.
-        ..dffffffffd..........dffffffffd..
-        ...dbccccbd............dbccccbd...
-    `, SpriteKind.Player)
+    cannonSprite = sprites.create(assets.image`cannonModel`, SpriteKind.Player)
     cannonSprite.x = 75; cannonSprite.y = 161
     tiles.setCurrentTilemap(tilemap`level1`)
     controller.moveSprite(cannonSprite, 90, 0)
@@ -93,24 +62,7 @@ function rougeLite() {
 
 // Creates an individual enemy
 function createBall() {
-    let ball = sprites.create(img`
-        . . . . . . . . . . . . . . . .
-        . . . . 1 1 1 1 1 1 1 . . . . .
-        . . 1 1 7 7 7 7 7 7 7 1 1 . . .
-        . 1 7 7 7 7 7 7 7 7 7 7 7 1 . .
-        . 1 7 7 7 7 7 7 7 7 7 7 7 1 . .
-        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
-        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
-        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
-        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
-        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
-        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
-        1 7 7 7 7 7 7 7 7 7 7 7 7 7 1 .
-        . 1 7 7 7 7 7 7 7 7 7 7 7 1 . .
-        . 1 7 7 7 7 7 7 7 7 7 7 7 1 . .
-        . . 1 1 7 7 7 7 7 7 7 1 1 . . .
-        . . . . 1 1 1 1 1 1 1 . . . . .
-    `, SpriteKind.Enemy)
+    let ball = sprites.create(assets.image`enemyBall`, SpriteKind.Enemy)
     let healthbar = statusbars.create(20, 4, StatusBarKind.Health)
     healthbar.attachToSprite(ball)
     healthbar.setOffsetPadding(0, 3)
