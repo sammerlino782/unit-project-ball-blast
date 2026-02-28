@@ -9,6 +9,7 @@ namespace userconfig {
 namespace SpriteKind {
     export const Scoreboard = SpriteKind.create()
     export const Coin = SpriteKind.create()
+    export const Powerup = SpriteKind.create()
 }
 
 let spawnAmountOfEnemys: number = 3
@@ -21,7 +22,6 @@ let cannonSprite: Sprite;
 let levelTracker: Sprite;
 let bulletStrength = 15;
 let gameActive = false;
-
 
 // Initializing game
 startGame()
@@ -127,14 +127,22 @@ info.onLifeZero(function() {
 // Health on death of enemy, the enemy dies and has a chance to drop coins
 
 statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
-    let ranNum = randint(0, 8)
+    let ranNum = randint(0, 10)
     let enemy = status.spriteAttachedTo()
     // Array of sprite skins for easier organization
     let coinSkins = [assets.image`powerup`, assets.image`Coin1`, assets.image`Coin2`, assets.image`Coin5`]
     let coinSkinSelected: Image;
     let coinWorth;
     if (ranNum > 3) {
-        if (ranNum >= 8) {
+        if (ranNum === 10) {
+            coinSkinSelected = coinSkins[0]
+            let powerup = sprites.create(coinSkinSelected, SpriteKind.Powerup)
+
+            powerup.setPosition(enemy.x, enemy.y)
+            powerup.setVelocity(0, 80)
+            return;
+        }
+        else if (ranNum >= 8) {
             coinSkinSelected = coinSkins[3]
             coinWorth = 5
         } else if (ranNum > 6) {
@@ -156,6 +164,21 @@ statusbars.onZero(StatusBarKind.Health, function(status: StatusBarSprite) {
     numberOfEnemys -= 1
 })
 
+
+// Making a powerup and returning the activated powerup
+let activatedPowerup: string;
+function activatePowerup (): string {
+    let ranNum = randint(0, 9)
+
+    if (ranNum <= 3) {
+        // TODO
+    } else if (ranNum <= 6) {
+        // TODO
+    } else {
+        // TODO
+    }
+    return activatedPowerup;
+}
 
 
 let enemies;
@@ -184,4 +207,10 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Coin, function (player: Sprite, coin: Sprite) {
     info.changeScoreBy(coin.data["coinWorth"])
     sprites.destroy(coin)
+})
+
+let currentPowerup;
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Powerup, function (player: Sprite, powerup: Sprite) {
+    sprites.destroy(powerup)
+    currentPowerup = activatePowerup()
 })
