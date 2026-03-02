@@ -22,10 +22,16 @@ let infoBoard: Sprite;
 let bulletStrength = 15;
 let gameActive = false;
 let message: string;
+let username: string = ""
 
 // Initializing game
 startGame()
 game.splash("Welcome to Ball Blast!")
+
+while (username == "") {
+    username = game.askForString("Enter username: ", 12, false)
+}
+
 
 // Create scoreboard first
 infoBoard = sprites.create(assets.image`infoboardModel`, SpriteKind.Scoreboard)
