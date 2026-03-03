@@ -44,10 +44,13 @@ function randomCards() {
     randomCard = randint(1, 3)
     if (randomCard == 1) {
         let card1 = sprites.create(assets.image`Attack_Scroll`, SpriteKind.Card)
+        card1.sayText("Increases damage",1500)
     } else if (randomCard == 2) {
         let card2 = sprites.create(assets.image`Speed Scroll`, SpriteKind.Card)
+        card2.sayText("Bullet speed increase",1500)
     } else if (randomCard == 3) {
         let card3 = sprites.create(assets.image`Health Scroll`, SpriteKind.Card)
+        card3.sayText("Increase health by 1",1500)
     }
 }
 while (username == "") {
