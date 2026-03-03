@@ -27,7 +27,7 @@ let username: string = ""
 // Initializing game
 startGame()
 game.splash("Welcome to Ball Blast!")
-
+// get username
 while (username == "") {
     username = game.askForString("Enter username: ", 12, false)
 }
@@ -83,8 +83,8 @@ game.onUpdateInterval(200, function () {
 
 })
 
-game.onUpdateInterval(3000, function () {
-    infoBoard.say(message, 3000)
+game.onUpdateInterval(1000, function () {
+    infoBoard.say(message, 1000)
 })
 
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
