@@ -105,7 +105,18 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite: Sprite, location: tiles.Loca
 
 // destroys current sprites and asks for you want to continue
 info.onLifeZero(function () {
-    game.gameOver(false)
+    let continueLevel: boolean = game.ask("Continue?")
+    if (continueLevel) {
+        info.setLife(1)
+        sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+        // to stop enemies amount to increase & level increase
+        createEnemies()
+    } else {
+        game.gameOver(false)
+        controller.moveSprite(cannonSprite, 0, 0)
+        gameActive = false;
+    }
+    numberOfEnemys = spawnAmountOfEnemys
 })
 
 // Health on death of enemy, the enemy dies and has a chance to drop coins
