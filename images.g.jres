@@ -59,6 +59,26 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "frozenballModel"
     },
+    "image16": {
+        "data": "hwQLAAsAAAAAEQAQAQAAAAAQABAAAAAAAREAEAEBAAARAQAAEQEAAAAAEQEAAAAAAAABAQAAAAAAABEBAAAAABEBAAARAQAAAREAEAEBAAAAEAAQAAAAAAARABABAAAA",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Choice_Choser"
+    },
+    "image13": {
+        "data": "hwQQABAAAAARERERERERERERERERERERERFRVVUhIhIREVFVVSEREhERUVVVESIRERERERERERERERERERERERERERERERERERERIREREREREREhERERERERESEREREREREiIiISEREREREhERERERERESERERERERERIREREREREREREREREQ==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Attack_Scroll"
+    },
+    "image14": {
+        "data": "hwQQABAAAAAREREREREREREREZkZERERUVUVERERERFRVRWZGREREVFVFRERERERERERmRkRERERERERESIREREREREhERIhERERESEREiERIREREREhEhEhERERERERISIiERERERERIREREREREREhEREREREREREREREREREREREREREREQ==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Speed Scroll"
+    },
+    "image15": {
+        "data": "hwQQABAAAAARERERERERERERERERERERESESERERERERIiIRERERESEiIhIRESERISIiIhERIhIRIiIiEhEhEREhIiIiERERESEiIiIRERERIiIiEhEhESEiIiIRESISISIiEhERIRERIiIREREREREhEhEREREREREREREREREREREREREREQ==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Health Scroll"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

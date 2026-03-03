@@ -10,6 +10,8 @@ namespace SpriteKind {
     export const Scoreboard = SpriteKind.create()
     export const Coin = SpriteKind.create()
     export const Powerup = SpriteKind.create()
+    export const Player2 = SpriteKind.create()
+    export const Card = SpriteKind.create()
 }
 let spawnAmountOfEnemys: number = 3
 let numberOfEnemys = 3
@@ -23,11 +25,31 @@ let bulletStrength = 15;
 let gameActive = false;
 let message: string;
 let username: string = ""
-
+let inCardPlacement = false
+let randomCard = 0
+let speedAmount = 0
 // Initializing game
 startGame()
 game.splash("Welcome to Ball Blast!")
-// get username
+
+function randomCards() {
+    inCardPlacement = true;
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
+    let cardChooser = sprites.create(assets.image`Choice_Choser`, SpriteKind.Player2)
+    controller.moveSprite(cardChooser, 50, 50)
+    controller.moveSprite(cannonSprite, 0, 0)
+    cardChooser.setPosition(cannonSprite.x, cannonSprite.y)
+    controller.moveSprite(cardChooser)
+    randomCard = randint(1, 3)
+    if (randomCard == 1) {
+        let card1 = sprites.create(assets.image`Attack_Scroll`, SpriteKind.Card)
+    } else if (randomCard == 2) {
+        let card2 = sprites.create(assets.image`Speed Scroll`, SpriteKind.Card)
+    } else if (randomCard == 3) {
+        let card3 = sprites.create(assets.image`Health Scroll`, SpriteKind.Card)
+    }
+}
 while (username == "") {
     username = game.askForString("Enter username: ", 12, false)
 }
@@ -47,10 +69,6 @@ function startGame() {
     controller.moveSprite(cannonSprite, 90, 0)
 }
 
-//  shopStore is the update to increase your own stats at cost of score
-function rougeLite() {
-
-}
 
 // Creates an individual enemy
 function createBall() {
@@ -76,11 +94,12 @@ function createEnemies() {
 // Cannon shooting functionality, when space pressed down
 // the cannon shoots a projectile
 game.onUpdateInterval(200, function () {
-    if (controller.A.isPressed() && gameActive) {
-        let projectile = sprites.createProjectileFromSprite(assets.image`bulletModel`, cannonSprite, 0, -170)
-        projectile.y -= 22
+    if (inCardPlacement == false) {
+        if (controller.A.isPressed() && gameActive) {
+            let projectile = sprites.createProjectileFromSprite(assets.image`bulletModel`, cannonSprite, 0, -170 - speedAmount )
+            projectile.y -= 22
+        }
     }
-
 })
 
 game.onUpdateInterval(1000, function () {
@@ -88,11 +107,13 @@ game.onUpdateInterval(1000, function () {
 })
 
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!gameActive) {
-        message = "Level " + level
-        gameActive = true;
-        createEnemies()
-        controller.moveSprite(cannonSprite, 90, 0)
+    if (inCardPlacement == false){
+        if (!gameActive) {
+            message = "Level " + level
+            gameActive = true;
+            createEnemies()
+            controller.moveSprite(cannonSprite, 90, 0)
+        }
     }
 })
 
@@ -214,8 +235,26 @@ let enemies;
 // destroys the enemy sprite that overlaps with the player, and decreases life by 1 for player
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
     sprites.destroy(otherSprite)
+    numberOfEnemys -= 1
     info.changeLifeBy(-1)
     music.play(music.melodyPlayable(music.smallCrash), music.PlaybackMode.UntilDone)
+})
+
+sprites.onOverlap(SpriteKind.Player2, SpriteKind.Card, function(sprite: Sprite, otherSprite: Sprite) {
+    if (randomCard == 1){
+        bulletStrength += 5
+    } else if (randomCard == 2){
+        speedAmount += 10
+    } else {
+        info.changeLifeBy(1)
+    }
+    sprite.destroy()
+    otherSprite.destroy()
+    inCardPlacement = false
+    controller.moveSprite(cannonSprite,90,0)
+    level += 1
+    message = "Level " + level
+    createEnemies()
 })
 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Sprite, otherSprite: Sprite) {
@@ -227,9 +266,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite: Spr
     if (numberOfEnemys <= 0) {
         spawnAmountOfEnemys += 1
         numberOfEnemys = spawnAmountOfEnemys
-        level += 1
-        message = "Level " + level
-        createEnemies()
+        randomCards()
     }
 })
 
